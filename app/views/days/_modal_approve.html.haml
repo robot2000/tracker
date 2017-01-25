@@ -1,0 +1,20 @@
+.overlay
+.modal#approve
+  %h4.modal__title
+    = modal_window_title day
+    %a.modal__cancel.noBtn
+  %div.modal__body
+    = edit_another_vacation user, day
+    = form_tag user_day_status_path, method: :put, remote: true, class: 'modal-form' do
+      - if day.date < Date.today || day.vacation_range.size == 1 || vacation_days.size == 1
+        .modal-form__item
+          = label_tag :vacation_for_one_day, l(day.date, format: :date_month_year), class: 'modal-form__label'
+      - else
+        .modal-form__item
+          = radio_button_tag :vacation_for, :all_days, true, class: 'modal-form__radio'
+          = label_tag :vacation_for_all_days, vacation_ranger, class: 'modal-form__label'
+        .modal-form__item
+          = radio_button_tag :vacation_for, :one_day, false, class: 'modal-form__radio'
+          = label_tag :vacation_for_one_day, l(day.date, format: :date_month_year), class: 'modal-form__label'
+      = submit_tag_name day
+

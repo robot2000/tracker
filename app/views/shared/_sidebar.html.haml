@@ -1,0 +1,15 @@
+.sidebar#sidebar
+  .sidebar-title
+    = link_to image_tag("#{current_user.avatar}", class: 'sidebar-title__img'), user_weeks_path(current_user)
+    = link_to 'My Calendar', user_weeks_path(current_user), class: 'sidebar-title__name'
+  .sidebar-form
+    = render 'head_sidebar' if !current_path.match(/user_weeks/)
+  %ul.sidebar-toggle
+    - groups.each_with_index do |item, index|
+      %li.sidebar-toggle__item
+        %a.sidebar-toggle__link{ href:"##{item.group.code}", class: index == 0 ? 'active' : '' }
+          = item.group.name
+  .sidebar-collapse
+    - groups.each_with_index do |item, index|
+      %ul.sidebar-collapse-section{ id: "#{item.group.code}", class: index == 0 ? 'active' : '' }
+        = render 'shared/filter_items', filter_items: item.groups

@@ -1,0 +1,6 @@
+%div#main.main.col-full
+  %ul.calendar#calendar
+    = render partial: 'calendar_day', collection: dates, as: :date
+:javascript
+  app.methods.gapVacations()
+  app.methods.compareVacations()

@@ -1,0 +1,6 @@
+%ul.dashboard.dashboard-listener
+  %h2.dashboard__title
+    Timetable for
+    = user.full_name
+  = render partial: 'week', collection: weeks_mondays, as: :date
+= render 'confirm_modal'

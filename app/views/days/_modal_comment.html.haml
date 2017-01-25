@@ -1,0 +1,21 @@
+.overlay
+.modal#comment
+  %h4.modal__title
+    Comment
+    %a.modal__cancel.noBtn
+  %div.modal__body
+    = form_for day, url: user_day_comment_path, method: :put, remote: true do
+      - if day.date < Date.today || day.vacation_range.size == 1 || vacation_days.size == 1
+        .modal-form__item
+          .modal-text= l(day.date, format: :date_month_year)
+      - else
+        .modal-form__item
+          = radio_button_tag :comment_for, :all_days, true, class: 'modal-form__radio'
+          = label_tag :comment_for_all_days, vacation_ranger, class: 'modal-form__label'
+        .modal-form__item
+          = radio_button_tag :comment_for, :one_day, false, class: 'modal-form__radio'
+          = label_tag :comment_for_one_day, l(day.date, format: :date_month_year), class: 'modal-form__label'
+      = text_area_tag 'day[comment]', day.comment
+      %br
+      = link_to 'Cancel', user_day_path(user, day.date), remote: true, class: "btn noBtn btn-link"
+      = submit_tag 'Save', class: "btn btn-link"
